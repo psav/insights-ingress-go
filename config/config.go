@@ -4,6 +4,7 @@ import (
 	"regexp"
 	"strings"
 
+	rhiconfig "github.com/redhatinsights/app-common-go/pkg/api/v1"
 	"github.com/spf13/viper"
 )
 
@@ -34,7 +35,6 @@ func Get() *IngressConfig {
 
 	options := viper.New()
 	options.SetDefault("MaxSize", 10*1024*1024)
-	options.SetDefault("Port", 3000)
 	options.SetDefault("StageBucket", "available")
 	options.SetDefault("Auth", true)
 	options.SetDefault("KafkaBrokers", []string{"kafka:29092"})
@@ -51,7 +51,6 @@ func Get() *IngressConfig {
 	kubenv.SetDefault("Openshift_Build_Commit", "notrunninginopenshift")
 	kubenv.SetDefault("Hostname", "Hostname_Unavailable")
 	kubenv.AutomaticEnv()
-
 	return &IngressConfig{
 		Hostname:             kubenv.GetString("Hostname"),
 		MaxSize:              options.GetInt64("MaxSize"),
@@ -61,15 +60,15 @@ func Get() *IngressConfig {
 		KafkaGroupID:         options.GetString("KafkaGroupID"),
 		KafkaTrackerTopic:    options.GetString("KafkaTrackerTopic"),
 		ValidTopics:          strings.Split(options.GetString("ValidTopics"), ","),
-		Port:                 options.GetInt("Port"),
+		Port:                 int(rhiconfig.LoadedConfig.WebPort),
 		Profile:              options.GetBool("Profile"),
 		Debug:                options.GetBool("Debug"),
 		DebugUserAgent:       regexp.MustCompile(options.GetString("DebugUserAgent")),
 		OpenshiftBuildCommit: kubenv.GetString("Openshift_Build_Commit"),
 		Version:              "1.0.8",
 		MinioDev:             options.GetBool("MinioDev"),
-		MinioEndpoint:        options.GetString("MinioEndpoint"),
-		MinioAccessKey:       options.GetString("MinioAccessKey"),
-		MinioSecretKey:       options.GetString("MinioSecretKey"),
+		MinioEndpoint:        rhiconfig.LoadedConfig.ObjectStore.Endpoint,
+		MinioAccessKey:       rhiconfig.LoadedConfig.ObjectStore.AccessKey,
+		MinioSecretKey:       rhiconfig.LoadedConfig.ObjectStore.SecretKey,
 	}
 }
