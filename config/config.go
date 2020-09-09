@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -37,7 +38,7 @@ func Get() *IngressConfig {
 	options.SetDefault("MaxSize", 10*1024*1024)
 	options.SetDefault("StageBucket", "available")
 	options.SetDefault("Auth", true)
-	options.SetDefault("KafkaBrokers", []string{"kafka:29092"})
+	options.SetDefault("KafkaBrokers", []string{fmt.Sprintf("%v:%v", rhiconfig.LoadedConfig.Kafka.Brokers[0].Hostname, rhiconfig.LoadedConfig.Kafka.Brokers[0].Port)})
 	options.SetDefault("KafkaGroupID", "ingress")
 	options.SetDefault("KafkaTrackerTopic", "platform.payload-status")
 	options.SetDefault("ValidTopics", "unit")
