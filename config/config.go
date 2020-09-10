@@ -38,7 +38,6 @@ func Get() *IngressConfig {
 	options.SetDefault("MaxSize", 10*1024*1024)
 	options.SetDefault("StageBucket", "available")
 	options.SetDefault("Auth", true)
-	options.SetDefault("KafkaBrokers", []string{fmt.Sprintf("%v:%v", rhiconfig.LoadedConfig.Kafka.Brokers[0].Hostname, rhiconfig.LoadedConfig.Kafka.Brokers[0].Port)})
 	options.SetDefault("KafkaGroupID", "ingress")
 	options.SetDefault("KafkaTrackerTopic", "platform.payload-status")
 	options.SetDefault("ValidTopics", "unit")
@@ -57,7 +56,7 @@ func Get() *IngressConfig {
 		MaxSize:              options.GetInt64("MaxSize"),
 		StageBucket:          options.GetString("StageBucket"),
 		Auth:                 options.GetBool("Auth"),
-		KafkaBrokers:         options.GetStringSlice("KafkaBrokers"),
+		KafkaBrokers:         []string{fmt.Sprintf("%v:%v", rhiconfig.LoadedConfig.Kafka.Brokers[0].Hostname, rhiconfig.LoadedConfig.Kafka.Brokers[0].Port)},
 		KafkaGroupID:         options.GetString("KafkaGroupID"),
 		KafkaTrackerTopic:    options.GetString("KafkaTrackerTopic"),
 		ValidTopics:          strings.Split(options.GetString("ValidTopics"), ","),
