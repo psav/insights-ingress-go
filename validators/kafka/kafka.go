@@ -49,7 +49,7 @@ func (kv *Validator) Validate(vr *validators.Request) {
 	topic = fmt.Sprintf("platform.upload.%s", topic)
 	realizedTopicName := rhiconfig.KafkaTopics[topic].Name
 	l.Log.WithFields(logrus.Fields{"data": data, "topic": realizedTopicName}).Debug("Posting data to topic")
-	kv.ValidationProducerMapping[topic] <- data
+	kv.ValidationProducerMapping[realizedTopicName] <- data
 }
 
 func (kv *Validator) addProducer(topic string) {

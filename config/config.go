@@ -56,7 +56,7 @@ func Get() *IngressConfig {
 		MaxSize:              options.GetInt64("MaxSize"),
 		StageBucket:          options.GetString("StageBucket"),
 		Auth:                 options.GetBool("Auth"),
-		KafkaBrokers:         []string{fmt.Sprintf("%v:%v", rhiconfig.LoadedConfig.Kafka.Brokers[0].Hostname, rhiconfig.LoadedConfig.Kafka.Brokers[0].Port)},
+		KafkaBrokers:         []string{fmt.Sprintf("%v:%v", rhiconfig.LoadedConfig.Kafka.Brokers[0].Hostname, *(rhiconfig.LoadedConfig.Kafka.Brokers[0].Port))},
 		KafkaGroupID:         options.GetString("KafkaGroupID"),
 		KafkaTrackerTopic:    options.GetString("KafkaTrackerTopic"),
 		ValidTopics:          strings.Split(options.GetString("ValidTopics"), ","),
