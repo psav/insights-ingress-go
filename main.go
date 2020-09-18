@@ -88,13 +88,13 @@ func main() {
 		sub.Get("/", lubDub)
 		sub.With(upload.ResponseMetricsMiddleware, middleware.Logger).Post("/upload", handler)
 	}
-	sub.With(middleware.Logger).Get("/ping", version.GetVersion)
 	sub.With(middleware.Logger).Get("/version", version.GetVersion)
 	sub.With(middleware.Logger).Get("/openapi.json", apiSpec)
 
 	r.Mount("/api/ingress/v1", sub)
 	r.Mount("/r/insights/platform/ingress/v1", sub)
 	r.Get("/", lubDub)
+	r.Get("/ping", lubDub)
 	r.Handle("/metrics", promhttp.Handler())
 
 	if cfg.Profile {
