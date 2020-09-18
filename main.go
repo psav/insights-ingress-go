@@ -88,6 +88,7 @@ func main() {
 		sub.Get("/", lubDub)
 		sub.With(upload.ResponseMetricsMiddleware, middleware.Logger).Post("/upload", handler)
 	}
+	sub.With(middleware.Logger).Get("/ping", version.GetVersion)
 	sub.With(middleware.Logger).Get("/version", version.GetVersion)
 	sub.With(middleware.Logger).Get("/openapi.json", apiSpec)
 
