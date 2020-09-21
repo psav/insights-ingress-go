@@ -94,7 +94,7 @@ func main() {
 	r.Mount("/api/ingress/v1", sub)
 	r.Mount("/r/insights/platform/ingress/v1", sub)
 	r.Get("/", lubDub)
-	r.Get("/ping", lubDub)
+	r.Get("/healthz", lubDub)
 	r.Handle("/metrics", promhttp.Handler())
 
 	if cfg.Profile {
