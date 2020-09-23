@@ -67,7 +67,7 @@ func Get() *IngressConfig {
 		OpenshiftBuildCommit: kubenv.GetString("Openshift_Build_Commit"),
 		Version:              "1.0.8",
 		MinioDev:             options.GetBool("MinioDev"),
-		MinioEndpoint:        rhiconfig.LoadedConfig.ObjectStore.Endpoint,
+		MinioEndpoint:        fmt.Sprintf("%v:%v", rhiconfig.LoadedConfig.ObjectStore.Hostname, rhiconfig.LoadedConfig.ObjectStore.Port),
 		MinioAccessKey:       rhiconfig.LoadedConfig.ObjectStore.AccessKey,
 		MinioSecretKey:       rhiconfig.LoadedConfig.ObjectStore.SecretKey,
 	}
